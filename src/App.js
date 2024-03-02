@@ -8,6 +8,7 @@ import {
   NodesStore,
 } from "./stores/nodes-store";
 import { observer } from "mobx-react";
+import Chat from "./components/Chat";
 
 const App = observer(() => {
   const nodesStore = useMemo(() => new NodesStore(), []);
@@ -15,7 +16,9 @@ const App = observer(() => {
   return (
     <ProjectStoreContext.Provider value={nodesStore}>
       <div className="App">
-        <FLow />
+        <div className={`w-full h-full flex justify-end items-end`}>
+          <Chat />
+        </div>
       </div>
     </ProjectStoreContext.Provider>
   );

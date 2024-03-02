@@ -16,80 +16,94 @@ import snakecaseKeys from "snakecase-keys";
 import moment from "moment";
 import { v4 } from "uuid";
 import { computedFn } from "mobx-utils";
+// import io from "socket.io-client";
 
 export class NodesStore {
-  addNode = () => {
-    runInAction(() => {
-      const newNode = {
-        id: Math.random(),
-        type: "input",
-        data: { label: "Input" },
-        position: { x: 250, y: 25 },
-      };
-
-      this.nodes.push(newNode);
-      console.log(this.nodes, "this.initialNodes");
-    });
-  };
-
-  nodes = [
+  socket = null;
+  messages = [
     {
       id: "1",
-      type: "input",
-      data: { label: "Input" },
-      position: { x: 250, y: 25 },
+      type: "user",
+      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
     },
-
     {
       id: "2",
-      data: { label: "Default" },
-      position: { x: 100, y: 125 },
+      type: "operator",
+      text: "Some text",
     },
     {
-      id: "3",
-      type: "output",
-      data: { label: "Output" },
-      position: { x: 250, y: 250 },
+      id: "1",
+      type: "user",
+      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
     },
     {
-      id: "5",
-      type: "textUpdater",
-      position: { x: 0, y: 0 },
-      data: { value: 123 },
+      id: "2",
+      type: "operator",
+      text: "Some text",
     },
     {
-      id: "6",
-      type: "addButton",
-      position: { x: 250, y: 250 },
-      data: { label: "Add Node", onClick: this.addNode },
+      id: "1",
+      type: "user",
+      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
+    },
+    {
+      id: "2",
+      type: "operator",
+      text: "Some text",
+    },
+    {
+      id: "1",
+      type: "user",
+      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
+    },
+    {
+      id: "2",
+      type: "operator",
+      text: "Some text",
+    },
+    {
+      id: "1",
+      type: "user",
+      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
+    },
+    {
+      id: "2",
+      type: "operator",
+      text: "Some text",
+    },
+    {
+      id: "1",
+      type: "user",
+      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
+    },
+    {
+      id: "2",
+      type: "operator",
+      text: "Some text",
     },
   ];
-  constructor() {
-    makeAutoObservable(this);
+
+  initializeSocketListeners() {
+    this.socket.on("message", (message) => {
+      console.log("message", message);
+      this.messages.push(message);
+    });
   }
 
-  updateNodes = (changes) => {
-    runInAction(() => {
-      // Implement logic to apply changes to nodes here
-      // This might involve finding nodes by ID and updating their position or data
-    });
-  };
+  addMessage(message) {
+    this.messages.push(message);
+    this.socket.emit("message/operator", message);
+  }
 
-  updateEdges = (changes) => {
-    runInAction(() => {
-      // Implement logic to apply changes to edges here
-    });
-  };
+  constructor() {
+    makeAutoObservable(this);
+    this.socket = io("http://localhost:3003");
+    this.initializeSocketListeners();
 
-  addEdge = (newEdge) => {
-    runInAction(() => {
-      this.edges.push(newEdge);
+    this.socket.on("connect", () => {
+      console.log("Connected to server");
     });
-  };
-
-  edges = [
-    // Your initial edges
-  ];
+  }
 }
 export const ProjectStoreContext = React.createContext(null);
 
