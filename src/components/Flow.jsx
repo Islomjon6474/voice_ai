@@ -1,62 +1,64 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from "react";
+// import { MagicWand } from "@radix-ui/react-icons";
+import "reactflow/dist/style.css";
+import { observer } from "mobx-react";
+import {
+  NodesStore,
+  ProjectStoreContext,
+  useProjectStore,
+} from "../stores/nodes-store";
+import TextUpdaterNode from "./TextUpdaterNode";
+import AddButtonNode from "./AddButtonNode";
+import { action, toJS } from "mobx";
 import ReactFlow, {
-    Controls,
-    Background,
-    applyNodeChanges,
-    applyEdgeChanges,
-    addEdge,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
-
-const initialNodes = [
-    {
-        id: '1',
-        data: { label: 'Hello' },
-        position: { x: 0, y: 0 },
-        type: 'input',
-    },
-    {
-        id: '2',
-        data: { label: 'World' },
-        position: { x: 100, y: 100 },
-    },
-];
+  addEdge,
+  MiniMap,
+  Controls,
+  Background,
+  useNodesState,
+  useEdgesState,
+  ControlButton,
+} from "reactflow";
 
 const initialEdges = [];
 
-function Flow() {
-    const [nodes, setNodes] = useState(initialNodes);
-    const [edges, setEdges] = useState(initialEdges);
+const Flow = observer(() => {
+  const projectEditorStore = useProjectStore();
 
-    const onNodesChange = useCallback(
-        (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-        [],
-    );
-    const onEdgesChange = useCallback(
-        (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-        [],
-    );
-
-    const onConnect = useCallback(
-        (params) => setEdges((eds) => addEdge(params, eds)),
-        [],
-    );
-
-    return (
-        <div style={{ height: '100%' }}>
-            <ReactFlow
-                nodes={nodes}
-                onNodesChange={onNodesChange}
-                edges={edges}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                fitView
-            >
-                <Background />
-                <Controls />
-            </ReactFlow>
+  return (
+    <div className="App">
+      <div
+        // style={{ height: "100vh", width: "100vw", justifyContent: "center" }}
+        className="flex flex-col items-center justify-center gap-20 w-full h-full"
+      >
+        <div className={`w-full flex justify-around items-center`}>
+          <div className="w-[100px] h-[100px]  border-2 rounded-full shadow-2xl border-amber-400 flex items-center justify-center">
+            Main
+          </div>
+          <div className="w-[100px] h-[100px]  border-2 rounded-full shadow-2xl border-amber-400 flex items-center justify-center">
+            Main
+          </div>
+          <div className="w-[100px] h-[100px]  border-2 rounded-full shadow-2xl border-amber-400 flex items-center justify-center">
+            Main
+          </div>
         </div>
-    );
-}
+        <div className="w-[100px] h-[100px]  border-2 rounded-full shadow-2xl border-amber-400 flex items-center justify-center">
+          Main
+        </div>
+        <div className={`w-full flex justify-around items-center`}>
+          <div className="w-[100px] h-[100px]  border-2 rounded-full shadow-2xl border-amber-400 flex items-center justify-center">
+            Main
+          </div>
+          <div className="w-[100px] h-[100px]  border-2 rounded-full shadow-2xl border-amber-400 flex items-center justify-center">
+            Main
+          </div>
+          <div className="w-[100px] h-[100px]  border-2 rounded-full shadow-2xl border-amber-400 flex items-center justify-center">
+            Main
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
 
 export default Flow;
