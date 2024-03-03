@@ -25,7 +25,6 @@ def test_disconnect():
 @socketio.on('message')
 def handle_message(message):
     print('Received message:', message)
-    # Echo the message back to the client
     emit('message', message, broadcast=True, skip_sid=request.sid)
 
 
@@ -33,7 +32,12 @@ def handle_message(message):
 def handle_operator_message(message):
     print('Received operator message:', message)
     # Emit to everyone except the sender
-    emit('message', message, broadcast=True, skip_sid=request.sid)
+    reformatted_message = {
+        **message,
+        "type": "user",
+    }
+    print(reformatted_message, "reformatted_message")
+    emit('message', reformatted_message)
 
 if __name__ == "__main__":
     socketio.run(app, host="localhost", port=3003)

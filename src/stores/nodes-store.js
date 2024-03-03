@@ -20,68 +20,7 @@ import { computedFn } from "mobx-utils";
 
 export class NodesStore {
   socket = null;
-  messages = [
-    {
-      id: "1",
-      type: "user",
-      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
-    },
-    {
-      id: "2",
-      type: "operator",
-      text: "Some text",
-    },
-    {
-      id: "1",
-      type: "user",
-      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
-    },
-    {
-      id: "2",
-      type: "operator",
-      text: "Some text",
-    },
-    {
-      id: "1",
-      type: "user",
-      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
-    },
-    {
-      id: "2",
-      type: "operator",
-      text: "Some text",
-    },
-    {
-      id: "1",
-      type: "user",
-      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
-    },
-    {
-      id: "2",
-      type: "operator",
-      text: "Some text",
-    },
-    {
-      id: "1",
-      type: "user",
-      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
-    },
-    {
-      id: "2",
-      type: "operator",
-      text: "Some text",
-    },
-    {
-      id: "1",
-      type: "user",
-      text: "Some textSome textSome textSome textSome textSome textSome textSome textSome textSome text",
-    },
-    {
-      id: "2",
-      type: "operator",
-      text: "Some text",
-    },
-  ];
+  messages = [];
 
   initializeSocketListeners() {
     this.socket.on("message", (message) => {
